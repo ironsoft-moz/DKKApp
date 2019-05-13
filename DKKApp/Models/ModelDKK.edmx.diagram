@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="62beae5e41984bf39073612e17900f87" Name="Diagram1">
+        <EntityTypeShape EntityType="DKKModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_Curators" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_Documents" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_DocumentTypes" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_EducationLevels" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_Proprieties" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_Schools" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DKKModel.tbl_SchoolTypes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="DKKModel.FK_tbl_Schools_tbl_Curators" ManuallyRouted="false" />
+        <AssociationConnector Association="DKKModel.FK_tbl_Documents_tbl_DocumentTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="DKKModel.FK_tbl_Documents_tbl_Schools" ManuallyRouted="false" />
+        <AssociationConnector Association="DKKModel.FK_tbl_Schools_tbl_Proprieties" ManuallyRouted="false" />
+        <AssociationConnector Association="DKKModel.FK_tbl_Schools_tbl_SchoolTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

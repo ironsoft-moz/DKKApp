@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DKKModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_Curators">
+          <Key>
+            <PropertyRef Name="CuratorID" />
+          </Key>
+          <Property Name="CuratorID" Type="int" Nullable="false" />
+          <Property Name="CuratorName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CuratorShortName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Curator" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_Documents">
+          <Key>
+            <PropertyRef Name="DocumentID" />
+          </Key>
+          <Property Name="DocumentID" Type="int" Nullable="false" />
+          <Property Name="DocumentTypeID" Type="int" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="50" />
+          <Property Name="YearBorn" Type="nvarchar" MaxLength="4" />
+          <Property Name="YearComplete" Type="nvarchar" MaxLength="50" />
+          <Property Name="SchoolID" Type="int" />
+          <Property Name="DateIssue" Type="datetime" />
+          <Property Name="Series" Type="nvarchar" MaxLength="10" />
+          <Property Name="DocNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateEdited" Type="datetime" />
+          <Property Name="IDNumber" Type="nvarchar" MaxLength="14" />
+          <Property Name="IsHidden" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_DocumentTypes">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_EducationLevels">
+          <Key>
+            <PropertyRef Name="EducationLevelID" />
+          </Key>
+          <Property Name="EducationLevelID" Type="int" Nullable="false" />
+          <Property Name="EducationLevelName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DocumentTypeFrom" Type="int" />
+          <Property Name="DocumentTypeTo" Type="int" />
+          <Property Name="UVZFrom" Type="int" />
+          <Property Name="UVZTo" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_Proprieties">
+          <Key>
+            <PropertyRef Name="ProprietyID" />
+          </Key>
+          <Property Name="ProprietyID" Type="int" Nullable="false" />
+          <Property Name="ProprietyName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tbl_Schools">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="YearFrom" Type="nvarchar" MaxLength="4" />
+          <Property Name="YearTo" Type="nvarchar" MaxLength="4" />
+          <Property Name="ProprietyID" Type="int" />
+          <Property Name="CuratorID" Type="int" />
+          <Property Name="Locality" Type="nvarchar" MaxLength="1" />
+          <Property Name="Obl" Type="nvarchar" MaxLength="2" />
+          <Property Name="Rajon" Type="nvarchar" MaxLength="3" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="NDoc" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_SchoolTypes">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EducationLevel" Type="int" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "DKK.dbo.tbl_SOATO" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="tbl_SOATO">
+          <Property Name="Obl" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rajon" Type="nvarchar" MaxLength="50" />
+          <Property Name="SEL" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
+        <Association Name="FK_tbl_Documents_tbl_DocumentTypes">
+          <End Role="tbl_DocumentTypes" Type="Self.tbl_DocumentTypes" Multiplicity="0..1" />
+          <End Role="tbl_Documents" Type="Self.tbl_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_DocumentTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="tbl_Documents">
+              <PropertyRef Name="DocumentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Documents_tbl_Schools">
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="0..1" />
+          <End Role="tbl_Documents" Type="Self.tbl_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Schools">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="tbl_Documents">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Schools_tbl_Curators">
+          <End Role="tbl_Curators" Type="Self.tbl_Curators" Multiplicity="0..1" />
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Curators">
+              <PropertyRef Name="CuratorID" />
+            </Principal>
+            <Dependent Role="tbl_Schools">
+              <PropertyRef Name="CuratorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Schools_tbl_Proprieties">
+          <End Role="tbl_Proprieties" Type="Self.tbl_Proprieties" Multiplicity="0..1" />
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Proprieties">
+              <PropertyRef Name="ProprietyID" />
+            </Principal>
+            <Dependent Role="tbl_Schools">
+              <PropertyRef Name="ProprietyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Schools_tbl_SchoolTypes">
+          <End Role="tbl_SchoolTypes" Type="Self.tbl_SchoolTypes" Multiplicity="0..1" />
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_SchoolTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="tbl_Schools">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DKKModelContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Curators" EntityType="Self.tbl_Curators" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Documents" EntityType="Self.tbl_Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_DocumentTypes" EntityType="Self.tbl_DocumentTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_EducationLevels" EntityType="Self.tbl_EducationLevels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Proprieties" EntityType="Self.tbl_Proprieties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Schools" EntityType="Self.tbl_Schools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SchoolTypes" EntityType="Self.tbl_SchoolTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_Documents_tbl_DocumentTypes" Association="Self.FK_tbl_Documents_tbl_DocumentTypes">
+            <End Role="tbl_DocumentTypes" EntitySet="tbl_DocumentTypes" />
+            <End Role="tbl_Documents" EntitySet="tbl_Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Documents_tbl_Schools" Association="Self.FK_tbl_Documents_tbl_Schools">
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+            <End Role="tbl_Documents" EntitySet="tbl_Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Schools_tbl_Curators" Association="Self.FK_tbl_Schools_tbl_Curators">
+            <End Role="tbl_Curators" EntitySet="tbl_Curators" />
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Schools_tbl_Proprieties" Association="Self.FK_tbl_Schools_tbl_Proprieties">
+            <End Role="tbl_Proprieties" EntitySet="tbl_Proprieties" />
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Schools_tbl_SchoolTypes" Association="Self.FK_tbl_Schools_tbl_SchoolTypes">
+            <End Role="tbl_SchoolTypes" EntitySet="tbl_SchoolTypes" />
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DKKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_Curators">
+          <Key>
+            <PropertyRef Name="CuratorID" />
+          </Key>
+          <Property Name="CuratorID" Type="Int32" Nullable="false" />
+          <Property Name="CuratorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CuratorShortName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Curator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Schools" Relationship="Self.FK_tbl_Schools_tbl_Curators" FromRole="tbl_Curators" ToRole="tbl_Schools" />
+        </EntityType>
+        <EntityType Name="tbl_Documents">
+          <Key>
+            <PropertyRef Name="DocumentID" />
+          </Key>
+          <Property Name="DocumentID" Type="Int32" Nullable="false" />
+          <Property Name="DocumentTypeID" Type="Int32" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YearBorn" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="YearComplete" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolID" Type="Int32" />
+          <Property Name="DateIssue" Type="DateTime" Precision="3" />
+          <Property Name="Series" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DocNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateEdited" Type="DateTime" Precision="3" />
+          <Property Name="IDNumber" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="IsHidden" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbl_DocumentTypes" Relationship="Self.FK_tbl_Documents_tbl_DocumentTypes" FromRole="tbl_Documents" ToRole="tbl_DocumentTypes" />
+          <NavigationProperty Name="tbl_Schools" Relationship="Self.FK_tbl_Documents_tbl_Schools" FromRole="tbl_Documents" ToRole="tbl_Schools" />
+        </EntityType>
+        <EntityType Name="tbl_DocumentTypes">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Documents" Relationship="Self.FK_tbl_Documents_tbl_DocumentTypes" FromRole="tbl_DocumentTypes" ToRole="tbl_Documents" />
+        </EntityType>
+        <EntityType Name="tbl_EducationLevels">
+          <Key>
+            <PropertyRef Name="EducationLevelID" />
+          </Key>
+          <Property Name="EducationLevelID" Type="Int32" Nullable="false" />
+          <Property Name="EducationLevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentTypeFrom" Type="Int32" />
+          <Property Name="DocumentTypeTo" Type="Int32" />
+          <Property Name="UVZFrom" Type="Int32" />
+          <Property Name="UVZTo" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_Proprieties">
+          <Key>
+            <PropertyRef Name="ProprietyID" />
+          </Key>
+          <Property Name="ProprietyID" Type="Int32" Nullable="false" />
+          <Property Name="ProprietyName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_Schools" Relationship="Self.FK_tbl_Schools_tbl_Proprieties" FromRole="tbl_Proprieties" ToRole="tbl_Schools" />
+        </EntityType>
+        <EntityType Name="tbl_Schools">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="YearFrom" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="YearTo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="ProprietyID" Type="Int32" />
+          <Property Name="CuratorID" Type="Int32" />
+          <Property Name="Locality" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="Obl" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="Rajon" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NDoc" Type="Int32" />
+          <NavigationProperty Name="tbl_Curators" Relationship="Self.FK_tbl_Schools_tbl_Curators" FromRole="tbl_Schools" ToRole="tbl_Curators" />
+          <NavigationProperty Name="tbl_Documents" Relationship="Self.FK_tbl_Documents_tbl_Schools" FromRole="tbl_Schools" ToRole="tbl_Documents" />
+          <NavigationProperty Name="tbl_Proprieties" Relationship="Self.FK_tbl_Schools_tbl_Proprieties" FromRole="tbl_Schools" ToRole="tbl_Proprieties" />
+          <NavigationProperty Name="tbl_SchoolTypes" Relationship="Self.FK_tbl_Schools_tbl_SchoolTypes" FromRole="tbl_Schools" ToRole="tbl_SchoolTypes" />
+        </EntityType>
+        <EntityType Name="tbl_SchoolTypes">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EducationLevel" Type="Int32" />
+          <NavigationProperty Name="tbl_Schools" Relationship="Self.FK_tbl_Schools_tbl_SchoolTypes" FromRole="tbl_SchoolTypes" ToRole="tbl_Schools" />
+        </EntityType>
+        <Association Name="FK_tbl_Schools_tbl_Curators">
+          <End Role="tbl_Curators" Type="Self.tbl_Curators" Multiplicity="0..1" />
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Curators">
+              <PropertyRef Name="CuratorID" />
+            </Principal>
+            <Dependent Role="tbl_Schools">
+              <PropertyRef Name="CuratorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Documents_tbl_DocumentTypes">
+          <End Role="tbl_DocumentTypes" Type="Self.tbl_DocumentTypes" Multiplicity="0..1" />
+          <End Role="tbl_Documents" Type="Self.tbl_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_DocumentTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="tbl_Documents">
+              <PropertyRef Name="DocumentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Documents_tbl_Schools">
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="0..1" />
+          <End Role="tbl_Documents" Type="Self.tbl_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Schools">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="tbl_Documents">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Schools_tbl_Proprieties">
+          <End Role="tbl_Proprieties" Type="Self.tbl_Proprieties" Multiplicity="0..1" />
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Proprieties">
+              <PropertyRef Name="ProprietyID" />
+            </Principal>
+            <Dependent Role="tbl_Schools">
+              <PropertyRef Name="ProprietyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Schools_tbl_SchoolTypes">
+          <End Role="tbl_SchoolTypes" Type="Self.tbl_SchoolTypes" Multiplicity="0..1" />
+          <End Role="tbl_Schools" Type="Self.tbl_Schools" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_SchoolTypes">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="tbl_Schools">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DKKEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="tbl_Curators" EntityType="Self.tbl_Curators" />
+          <EntitySet Name="tbl_Documents" EntityType="Self.tbl_Documents" />
+          <EntitySet Name="tbl_DocumentTypes" EntityType="Self.tbl_DocumentTypes" />
+          <EntitySet Name="tbl_EducationLevels" EntityType="Self.tbl_EducationLevels" />
+          <EntitySet Name="tbl_Proprieties" EntityType="Self.tbl_Proprieties" />
+          <EntitySet Name="tbl_Schools" EntityType="Self.tbl_Schools" />
+          <EntitySet Name="tbl_SchoolTypes" EntityType="Self.tbl_SchoolTypes" />
+          <AssociationSet Name="FK_tbl_Schools_tbl_Curators" Association="Self.FK_tbl_Schools_tbl_Curators">
+            <End Role="tbl_Curators" EntitySet="tbl_Curators" />
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Documents_tbl_DocumentTypes" Association="Self.FK_tbl_Documents_tbl_DocumentTypes">
+            <End Role="tbl_DocumentTypes" EntitySet="tbl_DocumentTypes" />
+            <End Role="tbl_Documents" EntitySet="tbl_Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Documents_tbl_Schools" Association="Self.FK_tbl_Documents_tbl_Schools">
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+            <End Role="tbl_Documents" EntitySet="tbl_Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Schools_tbl_Proprieties" Association="Self.FK_tbl_Schools_tbl_Proprieties">
+            <End Role="tbl_Proprieties" EntitySet="tbl_Proprieties" />
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Schools_tbl_SchoolTypes" Association="Self.FK_tbl_Schools_tbl_SchoolTypes">
+            <End Role="tbl_SchoolTypes" EntitySet="tbl_SchoolTypes" />
+            <End Role="tbl_Schools" EntitySet="tbl_Schools" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DKKModelContainer" CdmEntityContainer="DKKEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DKKModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Curators">
+            <EntityTypeMapping TypeName="DKKModel.tbl_Curators">
+              <MappingFragment StoreEntitySet="tbl_Curators">
+                <ScalarProperty Name="CuratorID" ColumnName="CuratorID" />
+                <ScalarProperty Name="CuratorName" ColumnName="CuratorName" />
+                <ScalarProperty Name="CuratorShortName" ColumnName="CuratorShortName" />
+                <ScalarProperty Name="Curator" ColumnName="Curator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Documents">
+            <EntityTypeMapping TypeName="DKKModel.tbl_Documents">
+              <MappingFragment StoreEntitySet="tbl_Documents">
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+                <ScalarProperty Name="DocumentTypeID" ColumnName="DocumentTypeID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="YearBorn" ColumnName="YearBorn" />
+                <ScalarProperty Name="YearComplete" ColumnName="YearComplete" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="DateIssue" ColumnName="DateIssue" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="DocNumber" ColumnName="DocNumber" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateEdited" ColumnName="DateEdited" />
+                <ScalarProperty Name="IDNumber" ColumnName="IDNumber" />
+                <ScalarProperty Name="IsHidden" ColumnName="IsHidden" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_DocumentTypes">
+            <EntityTypeMapping TypeName="DKKModel.tbl_DocumentTypes">
+              <MappingFragment StoreEntitySet="tbl_DocumentTypes">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_EducationLevels">
+            <EntityTypeMapping TypeName="DKKModel.tbl_EducationLevels">
+              <MappingFragment StoreEntitySet="tbl_EducationLevels">
+                <ScalarProperty Name="EducationLevelID" ColumnName="EducationLevelID" />
+                <ScalarProperty Name="EducationLevelName" ColumnName="EducationLevelName" />
+                <ScalarProperty Name="DocumentTypeFrom" ColumnName="DocumentTypeFrom" />
+                <ScalarProperty Name="DocumentTypeTo" ColumnName="DocumentTypeTo" />
+                <ScalarProperty Name="UVZFrom" ColumnName="UVZFrom" />
+                <ScalarProperty Name="UVZTo" ColumnName="UVZTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Proprieties">
+            <EntityTypeMapping TypeName="DKKModel.tbl_Proprieties">
+              <MappingFragment StoreEntitySet="tbl_Proprieties">
+                <ScalarProperty Name="ProprietyID" ColumnName="ProprietyID" />
+                <ScalarProperty Name="ProprietyName" ColumnName="ProprietyName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Schools">
+            <EntityTypeMapping TypeName="DKKModel.tbl_Schools">
+              <MappingFragment StoreEntitySet="tbl_Schools">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="YearFrom" ColumnName="YearFrom" />
+                <ScalarProperty Name="YearTo" ColumnName="YearTo" />
+                <ScalarProperty Name="ProprietyID" ColumnName="ProprietyID" />
+                <ScalarProperty Name="CuratorID" ColumnName="CuratorID" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="Obl" ColumnName="Obl" />
+                <ScalarProperty Name="Rajon" ColumnName="Rajon" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="NDoc" ColumnName="NDoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SchoolTypes">
+            <EntityTypeMapping TypeName="DKKModel.tbl_SchoolTypes">
+              <MappingFragment StoreEntitySet="tbl_SchoolTypes">
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="EducationLevel" ColumnName="EducationLevel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
