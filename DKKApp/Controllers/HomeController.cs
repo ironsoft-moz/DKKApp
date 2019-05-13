@@ -22,7 +22,7 @@ namespace DKKApp.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "You contact page.";
 
             return View();
         }
